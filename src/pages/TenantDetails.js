@@ -194,7 +194,7 @@ const ActivityModal = ({ activity, tenantPhone, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-      <div className="relative top-20 mx-auto p-5 border w-[32rem] shadow-lg rounded-md bg-white">
+      <div className="relative top-20 mx-auto p-5 border w-[24rem] shadow-lg rounded-md bg-white">
         <div className="mt-3">
           <h3 className="text-lg font-medium text-gray-900 mb-4">
             Activity Details
@@ -226,12 +226,12 @@ const ActivityModal = ({ activity, tenantPhone, onClose }) => {
             </div>
           </div>
           {renderElectricityBreakdown()}
-          <div className="mt-6 flex justify-end space-x-3">
+          <div className="mt-6 flex justify-start space-x-3">
             <button
               onClick={handleWhatsAppShare}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             >
-              Share on WhatsApp
+              WhatsApp
             </button>
             <button
               onClick={handleSMSShare}
@@ -266,6 +266,20 @@ const TenantDetails = () => {
   const [activities, setActivities] = React.useState([]);
   const [selectedActivity, setSelectedActivity] = React.useState(null);
   const [countryCode, setCountryCode] = React.useState("91");
+  const [editFormData, setEditFormData] = React.useState({
+    name: "",
+    email: "",
+    phone: "",
+    propertyId: "",
+    unitNumber: "",
+    leaseStart: "",
+    leaseEnd: "",
+    rentAmount: "",
+    status: "",
+    baseElectricityMultiplier: "",
+    startMonthMeterReading: "",
+    description: "",
+  });
 
   // Country codes data
   const countryCodes = [
@@ -535,13 +549,13 @@ const TenantDetails = () => {
                 onClick={() => setIsEditMode(true)}
                 className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Edit Tenant
+                Edit
               </button>
               <button
                 onClick={() => navigate(`/tenants/${id}/activity/new`)}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Record Activity
+                Add Activity
               </button>
             </div>
           </div>
@@ -814,6 +828,27 @@ const TenantDetails = () => {
                     </select>
                   </div>
 
+                  {/* Description */}
+                  <div className="col-span-6">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Description
+                    </label>
+                    <div className="mt-1">
+                      <textarea
+                        id="description"
+                        name="description"
+                        rows={3}
+                        value={tenant.description}
+                        onChange={handleChange}
+                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        placeholder="Add any additional notes or details about the tenant"
+                      />
+                    </div>
+                  </div>
+
                   <div className="flex justify-end space-x-3">
                     <button
                       type="button"
@@ -821,7 +856,7 @@ const TenantDetails = () => {
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                       disabled={saving}
                     >
-                      Delete Tenant
+                      Delete
                     </button>
                     <button
                       type="button"
@@ -838,7 +873,7 @@ const TenantDetails = () => {
                         saving ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
-                      {saving ? "Saving..." : "Save Changes"}
+                      {saving ? "Saving..." : "Save"}
                     </button>
                   </div>
                 </form>
@@ -1065,9 +1100,7 @@ const TenantDetails = () => {
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              Delete Tenant
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Delete</h3>
             <p className="text-sm text-gray-500 mb-6">
               Are you sure you want to delete this tenant? This action cannot be
               undone.

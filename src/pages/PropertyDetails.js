@@ -223,7 +223,7 @@ const PropertyDetails = () => {
                       saving ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
-                    {saving ? "Saving..." : "Save Changes"}
+                    {saving ? "Saving..." : "Save"}
                   </button>
                 </div>
               </form>

@@ -109,7 +109,7 @@ const Settings = () => {
                       loading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
-                    {loading ? "Saving..." : "Save Changes"}
+                    {loading ? "Saving..." : "Save"}
                   </button>
                 </div>
               </form>

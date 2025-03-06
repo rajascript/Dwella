@@ -29,6 +29,7 @@ const NewTenant = () => {
     status: "Active",
     baseElectricityMultiplier: "7",
     startMonthMeterReading: "",
+    description: "",
   });
   const [error, setError] = React.useState("");
   const [countryCode, setCountryCode] = React.useState("91");
@@ -134,6 +135,7 @@ const NewTenant = () => {
         status: "Active",
         baseElectricityMultiplier: "7",
         startMonthMeterReading: "",
+        description: "",
       });
 
       navigate("/tenants");
@@ -404,6 +406,26 @@ const NewTenant = () => {
                   <p className="mt-1 text-sm text-gray-500">
                     Enter the initial meter reading when the tenant moves in.
                   </p>
+                </div>
+
+                <div className="col-span-6">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <div className="mt-1">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows={3}
+                      value={formData.description}
+                      onChange={handleChange}
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      placeholder="Add any additional notes or details about the tenant"
+                    />
+                  </div>
                 </div>
 
                 <div>
