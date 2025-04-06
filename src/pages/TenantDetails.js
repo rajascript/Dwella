@@ -258,6 +258,7 @@ const TenantDetails = () => {
   const { user } = useAuth();
   const [loading, setLoading] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
+  const [updatingRent, setUpdatingRent] = React.useState(false);
   const [tenant, setTenant] = React.useState(null);
   const [properties, setProperties] = React.useState([]);
   const [error, setError] = React.useState("");
@@ -320,6 +321,7 @@ const TenantDetails = () => {
 
     if (!hasRentForCurrentMonth) {
       try {
+        setUpdatingRent(true);
         const rentActivity = {
           type: "Expense",
           description: `Monthly Rent for ${today.toLocaleString("en-US", {
@@ -334,9 +336,12 @@ const TenantDetails = () => {
         };
 
         await addDoc(collection(db, "tenantActivities"), rentActivity);
+        window.location.reload();
       } catch (error) {
         console.error("Error recording monthly rent:", error);
         setError("Failed to record monthly rent. Please try again.");
+      } finally {
+        setUpdatingRent(false);
       }
     }
   }, [tenant, activities, id, user.uid]);
@@ -1001,6 +1006,16 @@ const TenantDetails = () => {
                       </p>
                     </div>
                   </div>
+                  {updatingRent && (
+                    <div className="mb-4 p-4 bg-blue-50 border-l-4 border-blue-500">
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500 mr-2"></div>
+                        <p className="text-sm text-blue-700">
+                          Updating latest rent information...
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   {activities.length === 0 ? (
                     <p className="mt-4 text-sm text-gray-500">
                       No activities recorded yet.
